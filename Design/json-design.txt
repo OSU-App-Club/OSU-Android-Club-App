@@ -1,0 +1,19 @@
+##The following are some of the data types we will be using
+##in the club app (both iOS & Android)
+
+type News = 
+    { id : int
+      title : string
+      description : string
+      date : string
+      thumbnail : string
+    }
+
+type App = 
+    { id : int
+      name : string
+      description : string
+      thumbnail : string
+      member_ids : int array
+      url : string
+    }
