@@ -4,5 +4,6 @@
     <string name="app_name">OSU Club App</string>
     <string name="hello_world">Why hello, there!! :D</string>
     <string name="action_settings">Settings</string>
+    <color name="black">#000000</color>
 
 </resources>
