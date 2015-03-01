@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.content.Intent;
 
 /**
  * Created by Chris on 2/16/2015.
@@ -18,5 +19,6 @@ public class Splash extends Activity{
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in);
         animation.setDuration(6000);
         iv.startAnimation(animation);
+        //startActivity(new Intent(Splash.this, MainActivity.class));
     }
 }
