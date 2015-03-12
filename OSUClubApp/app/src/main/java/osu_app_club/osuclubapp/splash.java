@@ -7,9 +7,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.content.Intent;
 
-/**
- * Created by Chris on 2/16/2015.
- */
 public class Splash extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +25,7 @@ public class Splash extends Activity{
                 Intent intent = new Intent(Splash.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             }
         });
     }
