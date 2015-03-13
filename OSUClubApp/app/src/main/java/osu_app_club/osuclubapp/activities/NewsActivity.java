@@ -14,18 +14,19 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import osu_app_club.osuclubapp.R;
 import osu_app_club.osuclubapp.fragments.NavBar;
+import osu_app_club.osuclubapp.interfaces.AppDataDelegate;
 import osu_app_club.osuclubapp.models.NewsObject;
+import osu_app_club.osuclubapp.utilities.AppData;
 
 //Ben's Friedman
 
 //todo implement the OnFragmentInteractionListener
-public class MainActivity extends ActionBarActivity implements NavBar.OnFragmentInteractionListener{
+public class NewsActivity extends ActionBarActivity implements NavBar.OnFragmentInteractionListener, AppDataDelegate{
 
-    //TODO make new packages for individual components (in your own branch of course)
-
-    //todo GO OVER SETTING UP THE HOLDER
     static class CellHolder {
         public TextView tv;
         public ImageView iv;
@@ -36,21 +37,7 @@ public class MainActivity extends ActionBarActivity implements NavBar.OnFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        GridView gl = (GridView)findViewById(R.id.main_menu_grid);
-
-        //todo you may set column nums here as well!
-        gl.setNumColumns(3);
-
-        //todo change to array of our custom objects
-        NewsObject[] newsObjects = new NewsObject[100];
-        //set our objects up
-        int len = newsObjects.length;
-        for(byte x = 0; x < len; x++) {
-            NewsObject no = new NewsObject("item"+x, R.drawable.ic_launcher);
-            newsObjects[x] = no;
-        }
-
-        gl.setAdapter(new CustomAdapter(this, R.layout.mainmenucell, newsObjects));
+        AppData.setCallbackListener(this, getApplication());
     }
 
 
@@ -76,35 +63,26 @@ public class MainActivity extends ActionBarActivity implements NavBar.OnFragment
         return super.onOptionsItemSelected(item);
     }
 
-    //todo change generic type to a custom class
     private class CustomAdapter extends ArrayAdapter<NewsObject> {
 
-        //todo change the input here as well to our 'Object'
-        private CustomAdapter(Context context, int resource, NewsObject[] objects) {
+        private CustomAdapter(Context context, int resource, List<NewsObject> objects) {
             super(context, resource, objects);
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            //todo change this to our 'Object' generic type
             NewsObject item = getItem(position);
-
-            //todo place cell holder here
             CellHolder ch = null;
 
             if(convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate( R.layout.mainmenucell, parent, false);
-
-                //todo move these up here
+                convertView = LayoutInflater.from(getContext()).inflate( R.layout.newstableviewcell, parent, false);
                 //fetch a reference to our TextView for our cell
                 TextView tv = (TextView)convertView.findViewById(R.id.mainmenu_tv);
                 //fetch a reference to our ImageView for our cell
                 ImageView iv = (ImageView)convertView.findViewById(R.id.mainmenu_image);
 
-                //todo get a handle to our cell holder
                 ch = new CellHolder();
-                //todo set our values
                 ch.tv = tv;
                 ch.iv = iv;
 
@@ -112,12 +90,12 @@ public class MainActivity extends ActionBarActivity implements NavBar.OnFragment
                 convertView.setTag(ch);
             }
 
-            //todo get our cellholder back and the lines below, don't need to keep refetching our reference to our TextViews & ImageViews
             if(ch == null)
                 ch = (CellHolder)convertView.getTag();
 
             ch.tv.setText(item.getTitle());
-            ch.iv.setImageResource(item.getImageRes());
+            //todo we'll need these images at some point here...
+            //ch.iv.setImageResource(item.getImageRes());
 
             return convertView;
         }
@@ -127,5 +105,16 @@ public class MainActivity extends ActionBarActivity implements NavBar.OnFragment
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onAppDataFetched() {
+        GridView gl = (GridView)findViewById(R.id.main_menu_grid);
+
+        //todo you may set column nums here as well!
+        gl.setNumColumns(1);
+
+        AppData appData = AppData.getInstance();
+        gl.setAdapter(new CustomAdapter(this, R.layout.newstableviewcell, appData.getNewsData()));
     }
 }

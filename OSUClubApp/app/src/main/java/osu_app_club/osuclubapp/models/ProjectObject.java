@@ -1,15 +1,17 @@
 package osu_app_club.osuclubapp.models;
 
+import java.util.List;
+
 /**
- * Created by Bfriedman on 3/2/15.
+ * Created by Bfriedman on 3/12/15.
  */
-//todo CREATE THIS
-public class NewsObject {
+public class ProjectObject {
     private int id;
-    private String title;
+    private String name;
     private String description;
-    private String date;
     private String thumbnailURL;
+    private List<Integer> memberIds;
+    private String url;
 
     public int getId() {
         return id;
@@ -19,12 +21,12 @@ public class NewsObject {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -35,19 +37,27 @@ public class NewsObject {
         this.description = description;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public String getThumbnailURL() {
         return thumbnailURL;
     }
 
     public void setThumbnailURL(String thumbnailURL) {
         this.thumbnailURL = thumbnailURL;
+    }
+
+    public List<Integer> getMemberIds() {
+        return memberIds;
+    }
+
+    public void setMemberIds(List<Integer> memberIds) {
+        this.memberIds = memberIds;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
