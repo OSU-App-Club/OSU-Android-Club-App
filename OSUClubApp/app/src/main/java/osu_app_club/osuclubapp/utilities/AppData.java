@@ -2,7 +2,6 @@ package osu_app_club.osuclubapp.utilities;
 
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -19,7 +18,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import osu_app_club.osuclubapp.interfaces.AppDataDelegate;
+import osu_app_club.osuclubapp.interfaces.AppDataCallback;
+import osu_app_club.osuclubapp.models.MemberObject;
 import osu_app_club.osuclubapp.models.NewsObject;
 import osu_app_club.osuclubapp.models.ProjectObject;
 
@@ -33,9 +33,13 @@ public class AppData implements Runnable {
 
     private static final String NEWS_URL = "https://raw.githubusercontent.com/OSU-App-Club/OSU-Club-App-Resources/master/news/news.json";
     private static final String PROJECTS_URL = "https://raw.githubusercontent.com/OSU-App-Club/OSU-Club-App-Resources/master/projects/projects.json";
+    private static final String MEMBERS_URL = "https://api.github.com/orgs/OSU-App-Club/public_members";
+
     private static List<NewsObject> newsObjectsList;
     private static List<ProjectObject> projectObjectsList;
-    private static AppDataDelegate callback;
+    private static List<MemberObject> memberObjectsList;
+
+    private static AppDataCallback callback;
     private static Context context;
     private static boolean isReady = false;
 
@@ -55,7 +59,11 @@ public class AppData implements Runnable {
         return projectObjectsList;
     }
 
-    public static void setCallbackListener(AppDataDelegate _callback, Context ctx) {
+    public List<MemberObject> getMemberData() {
+        return memberObjectsList;
+    }
+
+    public static void setCallbackListener(AppDataCallback _callback, Context ctx) {
         if(isReady) {
             //our data is already here, let's just shoot back immediately
             _callback.onAppDataFetched();
@@ -91,10 +99,20 @@ public class AppData implements Runnable {
     @Override
     public void run() {
         isReady = false; //set not ready
-        String news = getStream(NEWS_URL);
-        String projects = getStream(PROJECTS_URL);
-        newsObjectsList = extractNewsObjects(news);
-        projectObjectsList = extractProjectObjects(projects);
+
+        //get news json
+        String newsData = getStream(NEWS_URL);
+        //get projects json
+        String projectsData = getStream(PROJECTS_URL);
+        //get members json
+        String membersData = getStream(MEMBERS_URL);
+
+        //extract news objects
+        newsObjectsList = extractNewsObjects(newsData);
+        //extract project objects
+        projectObjectsList = extractProjectObjects(projectsData);
+        //extract member objects
+        memberObjectsList = extractMemberObjects(membersData);
 
         isReady = true; //set ready
         if(callback != null) {
@@ -108,6 +126,48 @@ public class AppData implements Runnable {
             };
             mainHandler.post(myRunnable);
         }
+    }
+
+    private List<MemberObject> extractMemberObjects(String input) {
+        try {
+            List<MemberObject> memberObjects = new ArrayList<>();
+            JSONArray members = new JSONArray(input);
+            int len = members.length();
+
+            for(int x = 0; x < len; x++) {
+                //create a new MemberObject
+                MemberObject mo = new MemberObject();
+                //get our json object to extract the elements through it
+                JSONObject job = members.getJSONObject(x);
+
+                //get id
+                mo.setId(job.getInt("id"));
+                //get login (username)
+                mo.setLogin(job.getString("login"));
+                //get avatar_url (image)
+                mo.setAvatarURL(job.getString("avatar_url"));
+                //get url for API calls on this user
+                mo.setUrl(job.getString("url"));
+                //get html_url for normal page
+                mo.setHtml_url(job.getString("html_url"));
+                //get gists_url
+                mo.setGists_url(job.getString("gists_url"));
+                //get starred_url
+                mo.setStarred_url(job.getString("starred_url"));
+                //get repos_url
+                mo.setRepos_url(job.getString("repos_url"));
+
+                //add this object
+                memberObjects.add(mo);
+            }
+
+            return memberObjects;
+
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+        //some error was thrown most likely, return null!
+        return null;
     }
 
     private List<NewsObject> extractNewsObjects(String input) {

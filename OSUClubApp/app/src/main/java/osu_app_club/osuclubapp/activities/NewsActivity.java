@@ -18,14 +18,15 @@ import java.util.List;
 
 import osu_app_club.osuclubapp.R;
 import osu_app_club.osuclubapp.fragments.NavBar;
-import osu_app_club.osuclubapp.interfaces.AppDataDelegate;
+import osu_app_club.osuclubapp.interfaces.AppDataCallback;
+import osu_app_club.osuclubapp.models.MemberObject;
 import osu_app_club.osuclubapp.models.NewsObject;
 import osu_app_club.osuclubapp.utilities.AppData;
 
 //Ben's Friedman
 
 //todo implement the OnFragmentInteractionListener
-public class NewsActivity extends ActionBarActivity implements NavBar.OnFragmentInteractionListener, AppDataDelegate{
+public class NewsActivity extends ActionBarActivity implements NavBar.OnFragmentInteractionListener, AppDataCallback {
 
     static class CellHolder {
         public TextView tv;
@@ -63,16 +64,16 @@ public class NewsActivity extends ActionBarActivity implements NavBar.OnFragment
         return super.onOptionsItemSelected(item);
     }
 
-    private class CustomAdapter extends ArrayAdapter<NewsObject> {
+    private class CustomAdapter extends ArrayAdapter<MemberObject> {
 
-        private CustomAdapter(Context context, int resource, List<NewsObject> objects) {
+        private CustomAdapter(Context context, int resource, List<MemberObject> objects) {
             super(context, resource, objects);
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            NewsObject item = getItem(position);
+            MemberObject item = getItem(position);
             CellHolder ch = null;
 
             if(convertView == null) {
@@ -93,7 +94,7 @@ public class NewsActivity extends ActionBarActivity implements NavBar.OnFragment
             if(ch == null)
                 ch = (CellHolder)convertView.getTag();
 
-            ch.tv.setText(item.getTitle());
+            ch.tv.setText(item.getLogin());
             //todo we'll need these images at some point here...
             //ch.iv.setImageResource(item.getImageRes());
 
@@ -115,6 +116,6 @@ public class NewsActivity extends ActionBarActivity implements NavBar.OnFragment
         gl.setNumColumns(1);
 
         AppData appData = AppData.getInstance();
-        gl.setAdapter(new CustomAdapter(this, R.layout.newstableviewcell, appData.getNewsData()));
+        gl.setAdapter(new CustomAdapter(this, R.layout.newstableviewcell, appData.getMemberData()));
     }
 }
