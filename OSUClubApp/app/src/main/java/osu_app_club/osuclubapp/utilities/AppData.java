@@ -51,6 +51,13 @@ public class AppData implements Runnable {
 
     }
 
+    /**
+     * Requests a fresh set of data to be fetched from the web
+     */
+    public static void requestDataUpdate() {
+        new Thread(AppData.getInstance()).start();
+    }
+
     public List<NewsObject> getNewsData() {
         return newsObjectsList;
     }
@@ -248,6 +255,9 @@ public class AppData implements Runnable {
                 projectObject.setMemberIds(memberIdsList);
                 //get url
                 projectObject.setUrl(job.getString("url"));
+
+                //add this object
+                projectObjects.add(projectObject);
             }
 
             return projectObjects;

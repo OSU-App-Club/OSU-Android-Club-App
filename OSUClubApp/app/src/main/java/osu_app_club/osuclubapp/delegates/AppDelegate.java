@@ -20,7 +20,7 @@ public class AppDelegate extends Application{
         super.onCreate();
         Log.i(TAG, "App Delegate started up");
 
-        new Thread(AppData.getInstance()).start();
+        AppData.requestDataUpdate();
     }
 
     @Override

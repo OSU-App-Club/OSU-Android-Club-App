@@ -16,14 +16,12 @@ import java.util.List;
 
 import osu_app_club.osuclubapp.R;
 import osu_app_club.osuclubapp.interfaces.AppDataCallback;
-import osu_app_club.osuclubapp.models.NewsObject;
+import osu_app_club.osuclubapp.models.ProjectObject;
 import osu_app_club.osuclubapp.utilities.AppData;
-
-//Ben's Friedman
-
-//todo implement the OnFragmentInteractionListener
-public class NewsActivity extends Fragment implements AppDataCallback {
-
+/**
+ * Created by Bfriedman on 3/14/15.
+ */
+public class MOCK_ProjectsActivity extends Fragment implements AppDataCallback {
     static class CellHolder {
         public TextView tv;
         public ImageView iv;
@@ -32,6 +30,7 @@ public class NewsActivity extends Fragment implements AppDataCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        //todo sets up pre-onViewCreated
         LayoutInflater li = getActivity().getLayoutInflater();
         View v = li.inflate(R.layout.news_menu_layout, null);
 
@@ -41,20 +40,21 @@ public class NewsActivity extends Fragment implements AppDataCallback {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //todo similar to -onCreate-
         //todo this callback will fire IMMEDIATELY if data is already available, needs to be placed AFTER view creation in case that happens, otherwise it just shoots a null pointer error since our view isn't set yet!
         AppData.setCallbackListener( this, getActivity().getApplication());
     }
 
-    private class CustomAdapter extends ArrayAdapter<NewsObject> {
+    private class CustomAdapter extends ArrayAdapter<ProjectObject> {
 
-        private CustomAdapter(Context context, int resource, List<NewsObject> objects) {
+        private CustomAdapter(Context context, int resource, List<ProjectObject> objects) {
             super(context, resource, objects);
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            NewsObject item = getItem(position);
+            ProjectObject item = getItem(position);
             CellHolder ch = null;
 
             if(convertView == null) {
@@ -75,7 +75,7 @@ public class NewsActivity extends Fragment implements AppDataCallback {
             if(ch == null)
                 ch = (CellHolder)convertView.getTag();
 
-            ch.tv.setText(item.getTitle());
+            ch.tv.setText(item.getName());
             //todo we'll need these images at some point here...
             //ch.iv.setImageResource(item.getImageRes());
 
@@ -92,7 +92,7 @@ public class NewsActivity extends Fragment implements AppDataCallback {
             gl.setNumColumns(1);
 
             AppData appData = AppData.getInstance();
-            gl.setAdapter(new CustomAdapter(getActivity().getApplication(), R.layout.newstableviewcell, appData.getNewsData()));
+            gl.setAdapter(new CustomAdapter(getActivity().getApplication(), R.layout.newstableviewcell, appData.getProjectsData()));
         }
     }
 }

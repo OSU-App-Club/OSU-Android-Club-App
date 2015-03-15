@@ -10,12 +10,6 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <fragment
-        android:name="osu_app_club.osuclubapp.fragments.NavBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_nav_bar"/>
-
     <GridView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
