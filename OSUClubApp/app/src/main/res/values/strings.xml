@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">OSU App Club</string>
+    <string name="app_name">OSU Club App</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <color name="black">#000000</color>
 
     <string name="news_tab">News</string>
     <string name="projects_tab">Projects</string>
