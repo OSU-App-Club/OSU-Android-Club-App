@@ -10,5 +10,6 @@
     <string name="projects_tab">Projects</string>
     <string name="members_tab">Members</string>
     <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_app_page">AppPageActivity</string>
 
 </resources>
