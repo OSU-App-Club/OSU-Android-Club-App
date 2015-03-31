@@ -2,6 +2,7 @@ package osu_app_club.osuclubapp.utilities;
 
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -170,7 +171,7 @@ public class AppData implements Runnable {
 
             return memberObjects;
 
-        } catch (JSONException je) {
+        } catch (Exception je) {
             je.printStackTrace();
         }
         //some error was thrown most likely, return null!
@@ -208,7 +209,7 @@ public class AppData implements Runnable {
 
             return newsObjects;
 
-        } catch (JSONException je) {
+        } catch (Exception je) {
             je.printStackTrace();
         }
         //some error was thrown most likely, return null!
@@ -262,7 +263,7 @@ public class AppData implements Runnable {
 
             return projectObjects;
 
-        } catch (JSONException je) {
+        } catch (Exception je) {
             je.printStackTrace();
         }
         //some error was thrown most likely, return null!

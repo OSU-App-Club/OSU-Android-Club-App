@@ -8,12 +8,8 @@ import osu_app_club.osuclubapp.utilities.AppData;
 /**
  * Created by Bfriedman on 3/12/15.
  */
-public class AppDelegate extends Application{
+public class AppDelegate extends Application {
     private static String TAG = "APP-DELEGATE";
-
-    public AppDelegate() {
-
-    }
 
     @Override
     public void onCreate() {

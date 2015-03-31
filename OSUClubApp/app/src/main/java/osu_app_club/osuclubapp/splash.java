@@ -7,7 +7,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.content.Intent;
 
-public class Splash extends Activity{
+import osu_app_club.osuclubapp.activities.NavBarActivity;
+import osu_app_club.osuclubapp.activities.NewsActivity;
+
+public class Splash extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +25,7 @@ public class Splash extends Activity{
             public void onAnimationRepeat(Animation a){
             }
             public void onAnimationEnd(Animation a){
-                Intent intent = new Intent(Splash.this, MainActivity.class);
+                Intent intent = new Intent(Splash.this, NavBarActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
