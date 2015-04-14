@@ -32,8 +32,8 @@ public class NavBarActivity extends ActionBarActivity {
         //set projects tab
         tab = actionBar.newTab()
                 .setText("Projects")
-                .setTabListener(new TabListener<MOCK_ProjectsActivity>(
-                        this, "Projects", MOCK_ProjectsActivity.class));
+                .setTabListener(new TabListener<AppPageActivity>(
+                        this, "Projects", AppPageActivity.class));
         actionBar.addTab(tab);
 
         //set members tab

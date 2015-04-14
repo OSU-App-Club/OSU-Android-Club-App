@@ -10,39 +10,21 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
         <activity
             android:name="osu_app_club.osuclubapp.Splash"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="osu_app_club.osuclubapp.MainActivity"
-            android:label="@string/app_name" >
-        </activity>
-
 
         <activity
             android:name="osu_app_club.osuclubapp.activities.NavBarActivity"
             android:label="@string/app_name" >
         </activity>
 
-        <activity
-            android:name=".AppPageActivity"
-            android:label="@string/title_activity_app_page"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="osu_app_club.osuclubapp.MainActivity" />
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
